@@ -62,7 +62,7 @@ def get_selected_project(projects):
 
 def save_and_refresh(projects):
     save_projects(projects)
-    st.experimental_rerun()
+    st.rerun()
 
 # --- HOME VIEW ---
 if view == "Home":
@@ -95,7 +95,7 @@ if view == "Home":
         select_id = st.selectbox("Open a project", options=["— select —"] + [p["id"] for p in projects])
         if select_id != "— select —":
             st.session_state.selected_project_id = select_id
-            st.experimental_rerun()
+            st.rerun()
 
 # --- PROJECT VIEW ---
 else:
@@ -208,4 +208,4 @@ else:
 
     if st.sidebar.button("← Back to Home"):
         st.session_state.selected_project_id = None
-        st.experimental_rerun()
+        st.rerun()
