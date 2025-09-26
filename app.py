@@ -7,7 +7,7 @@ from typing import Dict, Any, List
 import pandas as pd
 import streamlit as st
 
-APP_TITLE = "FAIRy — Data Preparation Wizard"
+APP_TITLE = "FAIRy — Data Preparation Helper"
 st.set_page_config(page_title=APP_TITLE, page_icon="✨", layout="wide")
 
 # --- Simple local persistence for prototype (per user/machine) ---
@@ -66,20 +66,48 @@ def save_and_refresh(projects):
 
 # --- HOME VIEW ---
 if view == "Home":
-    st.title("✨ FAIRy")
-    st.caption("Prototype dashboard — manage datasets and prepare them for FAIR-compliant submission.")
+    st.title("✨ FAIRy: Make Your Research Data FAIR—No Stress, No Surprises")
+    
+    # Subheadline
+    st.markdown(
+        "FAIRy helps you turn messy spreadsheets into fundable, repository-ready datasets. "
+        "Upload any file, get an instant FAIR compliance audit, and see exactly what to fix—"
+        "**no jargon, no frustration.**"
+    )
 
+    # Call to Action
+    st.markdown("---")
+    st.markdown(
+        "🌟 **FAIRy is the free, intuitive tool for researchers to check, fix, and prepare data for submission—"
+        "so your science gets recognized, not rejected.**"
+    )
+
+    # Create Project
     with st.expander("➕ Create a new project", expanded=True):
         col1, col2 = st.columns([2,1])
         with col1:
-            title = st.text_input("Project title*", placeholder="e.g., RNA-seq study on XYZ")
-            desc = st.text_area("Short description*", placeholder="One or two lines about the dataset and study.")
+            title = st.text_input(
+                "Project title*", 
+                placeholder="e.g., RNA-seq study on XYZ",
+                key="new_project_title"
+            )
+            desc = st.text_area(
+                "Short description*",
+                placeholder="One or two lines about the dataset and study.",
+                key="new_project_desc"
+            )
         with col2:
-            if st.button("Create project", type="primary", disabled=not (title.strip() and desc.strip())):
+            if st.button(
+                "Create project",
+                type="primary",
+                disabled=not (title.strip() and desc.strip()),
+                key="new_project_button"
+            ):
                 p = new_project(title.strip(), desc.strip())
                 projects.insert(0, p)
                 save_and_refresh(projects)
 
+    #Projects Table
     if not projects:
         st.info("No projects yet. Create your first one above!")
     else:
@@ -121,8 +149,16 @@ else:
         st.subheader("Overview")
         col1, col2 = st.columns(2)
         with col1:
-            new_title = st.text_input("Title", value=p["title"])
-            new_desc = st.text_area("Description", value=p["description"])
+            new_title = st.text_input(
+                "Title",
+                value=p["title"],
+                key=f"proj_title_{p['id']}"
+            )
+            new_desc = st.text_area(
+                "Description",
+                value=p["description"],
+                key=f"proj_desc_{p['id']}"
+            )
             if st.button("Save overview"):
                 p["title"], p["description"] = new_title.strip(), new_desc.strip()
                 update_project_timestamp(p)
@@ -148,9 +184,22 @@ else:
 
     with tabs[2]:
         st.subheader("Permissions & Ethics (placeholder)")
-        contains_human = st.radio("Does your dataset include human subjects data?", options=["Unknown","No","Yes"], index=0)
-        irb = st.radio("IRB/ethics approval required?", options=["Unknown","No","Yes"], index=0)
-        perm_notes = st.text_area("Notes")
+
+        contains_human = st.radio(
+            "Does your dataset include human subjects data?",
+            options=["Unknown","No","Yes"],
+            index=0,
+            key=f"perm_contains_human_{p['id']}"
+        )
+        irb = st.radio(
+            "IRB/ethics approval required?",
+            options=["Unknown","No","Yes"],
+            index=0,
+            key=f"perm_irb_{p['id']}"
+        )
+        perm_notes = st.text_area(
+            "Notes",
+            key=f"perm_notes_{p['id']}")
         if st.button("Save permissions"):
             p["permissions"] = {
                 "contains_human_data": None if contains_human=="Unknown" else (contains_human=="Yes"),
@@ -162,10 +211,20 @@ else:
 
     with tabs[3]:
         st.subheader("De-identification (placeholder)")
-        strategy = st.text_area("Strategy / approach", value=p["deid"].get("strategy",""))
-        deid_notes = st.text_area("Notes", value=p["deid"].get("notes",""))
+        strategy = st.text_area(
+            "Strategy / approach",
+            value=p["deid"].get("strategy",""),
+            key=f"deid_strategy_{p['id']}"
+        )
+        deid_notes = st.text_area(
+            "Notes",
+            value=p["deid"].get("notes",""),
+            key=f"deid_notes_{p['id']}")
         if st.button("Save de-identification"):
-            p["deid"] = {"strategy": strategy.strip(), "notes": deid_notes.strip()}
+            p["deid"] = {
+                "strategy": strategy.strip(),
+                "notes": deid_notes.strip()
+            }
             update_project_timestamp(p)
             save_and_refresh(projects)
 
@@ -185,10 +244,25 @@ else:
 
     with tabs[5]:
         st.subheader("Repository (placeholder)")
-        repo = st.selectbox("Choose a repository", ["— select —","GEO","SRA","ENA","Zenodo","dbGaP"], index=0)
-        repo_notes = st.text_area("Notes")
-        if st.button("Save repository choice"):
-            p["repository"] = {"choice": None if repo=="— select —" else repo, "notes": repo_notes.strip()}
+
+        repo = st.selectbox(
+            "Choose a repository",
+            ["— select —","GEO","SRA","ENA","Zenodo","dbGaP"],
+            index=0,
+            key=f"repo_choice_{p['id']}"
+        )
+
+        repo_notes = st.text_area(
+            "Notes",
+            value=p["repository"].get("notes", ""),
+            key=f"repo_notes_{p['id']}"
+        )
+
+        if st.button("Save repository choice", key=f"repo_save_{p['id']}"):
+            p["repository"] = {
+                "choice": None if repo=="— select —" else repo,
+                "notes": repo_notes.strip()
+            }
             update_project_timestamp(p)
             save_and_refresh(projects)
 
