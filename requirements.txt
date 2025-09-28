@@ -1,2 +1,3 @@
-streamlit>=1.37
-pandas>=2.2
+streamlit
+pandas
+pytest
