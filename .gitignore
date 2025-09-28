@@ -1,1 +1,6 @@
-.venv/\n.fairy_data/\n__pycache__/\n*.pyc\n.streamlit/\n.env\n
+.venv/
+.fairy_data/
+__pycache__/
+*.pyc
+.streamlit/
+.env
