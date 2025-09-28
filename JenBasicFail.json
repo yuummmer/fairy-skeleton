@@ -1,0 +1,13 @@
+{
+  "metadata": {
+    "title": "Test FAIR Dataset",
+    "upload_type": "dataset",
+    "description": "This is a dummy dataset I created to practice FAIR data submission.",
+    "creators": [
+      {"name": "Slotnick, Jennifer", "orcid": "0000-0002-1825-0097"}
+    ],
+    "keywords": ["FAIR", "demo", "bioinformatics"],
+    "access_right": "open",
+    "license": "CC-BY-4.0"
+  }
+}
