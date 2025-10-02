@@ -4,3 +4,14 @@ __pycache__/
 *.pyc
 .streamlit/
 .env
+# === FAIRy test fixtures: keep originals out of git ===
+fairy/tests/fixtures/**/raw/*
+!fairy/tests/fixtures/**/metadata/**
+!fairy/tests/fixtures/**/registry.yaml
+!fairy/tests/fixtures/**/derived/*.sample.*
+!fairy/tests/fixtures/**/derived/*.tiny.*
+!fairy/tests/fixtures/**/derived/*_schema.json
+
+# optional local caches
+fairy/.data_cache/**
+fairy/.downloads/**
