@@ -6,6 +6,7 @@ import pandas as pd  # needed by UI for dataframes
 from fairy.core.storage import Storage, update_project_timestamp
 from fairy.ui.home_view import render_home
 from fairy.ui.project_view import render_project
+from fairy.utils.projects import project_dir, load_manifests, save_manifest
 
 APP_TITLE = "FAIRy — Data Preparation Helper"
 st.set_page_config(page_title=APP_TITLE, page_icon="✨", layout="wide")
