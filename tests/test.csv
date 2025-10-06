@@ -1,1 +1,4 @@
-Test test test
+sample_id,collection_date,tissue,read_length
+S1,2024-01-01,blood,150
+S2,2024-01-02,plasma,151
+S3,,serum,0
