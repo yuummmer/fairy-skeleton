@@ -2,6 +2,7 @@ import argparse, json
 from pathlib import Path
 from hashlib import sha256
 from ..core.services.report_writer import write_report, _now_utc_iso
+from ..core.services.validator import validate_csv
 
 def sha256_bytes(b: bytes) -> str:
     h = sha256(); h.update(b); return h.hexdigest()
@@ -11,13 +12,20 @@ def main(argv=None):
     p.add_argument("--input", required=True, help="CSV file to summarize")
     p.add_argument("--out", default="project_dir/reports", help="Output directory for report_v0.json")
     p.add_argument("--dry-run", action="store_true", help="Print JSON to stdout instead of writing")
+    p.add_argument("--kind", default="rna", help="schema kind: rna | generic | dna | ...")
     args = p.parse_args(argv)
 
     data_path = Path(args.input)
     data_bytes = data_path.read_bytes()
 
     # Placeholder meta; later wire to your validator
-    meta = {"n_rows": 0, "n_cols": 0, "fields_validated": [], "warnings": []}
+    meta_obj = validate_csv(str(data_path), kind=args.kind)
+    meta = {
+        "n_rows": meta_obj.n_rows,
+        "n_cols": meta_obj.n_cols,
+        "fields_validated": meta_obj.fields_validated,
+        "warnings": [w.__dict__ for w in meta_obj.warnings],
+        }
 
     payload = {
         "version": "0.1.0",
