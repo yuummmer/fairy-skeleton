@@ -3,6 +3,7 @@ from pathlib import Path
 from hashlib import sha256
 from ..core.services.report_writer import write_report, _now_utc_iso
 from ..core.services.validator import validate_csv
+from ..core.validators import generic, rna
 
 def sha256_bytes(b: bytes) -> str:
     h = sha256(); h.update(b); return h.hexdigest()
