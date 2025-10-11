@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Optional, Dict
+from typing import Dict, List, Optional
 
 @dataclass
 class DatasetId:
@@ -30,6 +30,17 @@ class WarningItem:
     failure: str
     index: int
 
+# Optional v0 fields you may want (schema-friendly, safe defaults)
+@dataclass
+class InputFile:
+    path: str
+    bytes: int
+
+@dataclass
+class Inputs:
+    project_dir: str
+    files: List[InputFile] = field(default_factory=list)
+
 @dataclass
 class ReportV0:
     version: str
@@ -39,4 +50,7 @@ class ReportV0:
     warnings: List[WarningItem] = field(default_factory=list)
     rulepacks: List[Rulepack] = field(default_factory=list)
     provenance: Provenance = field(default_factory=Provenance)
+    # present but optional in v0 (writer can ignore or populate later)
+    inputs: Inputs = field(default_factory=lambda: Inputs(project_dir=".", files=[]))
+    checks: List[Dict] = field(default_factory=list)
     scores: Dict[str, float] = field(default_factory=lambda: {"preflight": 0.0})

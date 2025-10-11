@@ -24,7 +24,7 @@ fairy-demo = "fairy.cli.run:main"  # <-- demo CLI (reserve `fairy` for the core 
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["fairy*"]              # our package is `fairy_demo` inside this repo
+include = ["fairy*", "validation*"]
 
 [tool.black]
 line-length = 100

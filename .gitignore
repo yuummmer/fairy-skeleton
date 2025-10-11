@@ -21,3 +21,5 @@ fairy/.downloads/**
 
 # Generated reports
 project_dir/reports/*.json
+
+project_dir/reports/*.json
