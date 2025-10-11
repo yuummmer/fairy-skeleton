@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FAIRy Report v0",
+  "type": "object",
+  "required": ["version","dataset_id","run_at","rulepacks","provenance","inputs","checks","scores"],
+  "properties": {
+    "version": {"const": "0.1.0"},
+    "run_at": {"type": "string", "pattern": "Z$"},
+    "dataset_id": {
+      "type": "object",
+      "required": ["filename","sha256"],
+      "properties": {
+        "filename": {"type": "string"},
+        "sha256": {"type": "string"}
+      }
+    },
+    "rulepacks": {"type": "array"},
+    "provenance": {"type": "object"},
+    "inputs": {
+      "type": "object",
+      "required": ["project_dir","files"],
+      "properties": {
+        "project_dir": {"type": "string"},
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path","bytes"],
+            "properties": {
+              "path": {"type": "string"},
+              "bytes": {"type": "integer", "minimum": 0}
+            }
+          }
+        }
+      }
+    },
+    "checks": {"type": "array"},
+    "scores": {"type": "object"}
+  }
+}
