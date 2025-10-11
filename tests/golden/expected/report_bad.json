@@ -1,0 +1,41 @@
+{
+  "checks": [],
+  "dataset_id": {
+    "filename": "test_bad.csv",
+    "sha256": "1bb435d400546a2c7d98000bf68ac82ba3f584d8e658c676257a3c2f2e90d7f9"
+  },
+  "inputs": {
+    "files": [
+      {
+        "bytes": 319,
+        "path": "test_bad.csv"
+      }
+    ],
+    "project_dir": "/home/jenni/projects/fairy-skeleton/tests/fairy"
+  },
+  "provenance": {
+    "license": null,
+    "notes": null,
+    "source_url": null
+  },
+  "rulepacks": [],
+  "scores": {
+    "preflight": 0.0
+  },
+  "summary": {
+    "fields_validated": [
+      "sample_id"
+    ],
+    "n_cols": 5,
+    "n_rows": 5
+  },
+  "version": "0.1.0",
+  "warnings": [
+    {
+      "check": "not_null",
+      "column": "sample_id",
+      "failure": "null value",
+      "index": 3
+    }
+  ]
+}

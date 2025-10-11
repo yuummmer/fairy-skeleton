@@ -1,5 +1,5 @@
 from pathlib import Path
-from validation.process_csv import process_csv
+from fairy.validation.process_csv import process_csv
 from fairy.core.services.report_writer import write_report
 import json
 
