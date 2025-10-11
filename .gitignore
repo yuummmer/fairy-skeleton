@@ -26,3 +26,6 @@ project_dir/dist/
 
 # Local data (if used)
 .fairy_data/
+
+# Test fixture raw data (avoid huge binaries)
+fairy/tests/fixtures/**/raw/
