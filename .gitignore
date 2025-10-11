@@ -1,41 +1,28 @@
-.venv/
-.fairy_data/
+# Python
 __pycache__/
-*.pyc
-.streamlit/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.venv/
+.venv*/
 .env
-# === FAIRy test fixtures: keep originals out of git ===
-fairy/tests/fixtures/**/raw/*
-!fairy/tests/fixtures/**/metadata/**
-!fairy/tests/fixtures/**/registry.yaml
-!fairy/tests/fixtures/**/derived/*.sample.*
-!fairy/tests/fixtures/**/derived/*.tiny.*
-!fairy/tests/fixtures/**/derived/*_schema.json
+.env.*
+.pytest_cache/
 
-# optional local caches
-fairy/.data_cache/**
-fairy/.downloads/**
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Project outputs (don’t commit runtime bundles)
 project_dir/out/
 project_dir/dist/
-*.egg-info/
-__pycache__/
-.pytest_cache/
-*.pyc
-.venv/
-.DS_Store
-project_dir/out/
-project_dir/dist/
-*.egg-info/
-__pycache__/
-.pytest_cache/
-*.pyc
-.venv/
-.DS_Store
-project_dir/out/
-project_dir/dist/
-*.egg-info/
-__pycache__/
-.pytest_cache/
-*.pyc
-.venv/
-.DS_Store
+
+# Local data (if used)
+.fairy_data/
