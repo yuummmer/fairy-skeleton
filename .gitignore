@@ -15,3 +15,9 @@ fairy/tests/fixtures/**/raw/*
 # optional local caches
 fairy/.data_cache/**
 fairy/.downloads/**
+
+# Build artifacts
+*.egg-info/
+
+# Generated reports
+project_dir/reports/*.json

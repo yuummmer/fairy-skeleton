@@ -1,0 +1,41 @@
+{
+  "dataset_id": {
+    "filename": "samples_toy.csv",
+    "sha256": "73726aad10bd2308dbd85b1248eab734496c5b1078eb2d622f8eb9114f295787"
+  },
+  "provenance": {
+    "license": null,
+    "notes": null,
+    "source_url": null
+  },
+  "rulepacks": [],
+  "run_at": "2025-10-10T22:52:56Z",
+  "scores": {
+    "preflight": 0.0
+  },
+  "summary": {
+    "fields_validated": [
+      "collection_date",
+      "read_length",
+      "sample_id",
+      "tissue"
+    ],
+    "n_cols": 4,
+    "n_rows": 2
+  },
+  "version": "0.1.0",
+  "warnings": [
+    {
+      "check": "not_null",
+      "column": "sample_id",
+      "failure": "null value",
+      "index": 1
+    },
+    {
+      "check": ">=1",
+      "column": "read_length",
+      "failure": "non-positive or invalid",
+      "index": 1
+    }
+  ]
+}
