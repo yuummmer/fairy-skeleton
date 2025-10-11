@@ -15,9 +15,27 @@ fairy/tests/fixtures/**/raw/*
 # optional local caches
 fairy/.data_cache/**
 fairy/.downloads/**
-
-# Build artifacts
+project_dir/out/
+project_dir/dist/
 *.egg-info/
-
-# Generated reports
-project_dir/reports/*.json
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+.DS_Store
+project_dir/out/
+project_dir/dist/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+.DS_Store
+project_dir/out/
+project_dir/dist/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+.DS_Store
