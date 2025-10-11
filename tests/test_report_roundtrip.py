@@ -1,6 +1,6 @@
 from pathlib import Path
 from validation.process_csv import process_csv
-from validation.report_writer import build_report, write_report
+from fairy.core.services.report_writer import write_report
 import json
 
 HERE = Path(__file__).parent
@@ -14,9 +14,22 @@ def test_process_csv_meta():
     assert isinstance(meta["warnings"], list)
 
 def test_report_json_schema_roundtrip(tmp_path):
-    meta, _ = process_csv("tests/test.csv")
-    obj = build_report(meta)
-    out = tmp_path / "report.json"
-    write_report(obj, str(out), "schemas/report_v0.schema.json")
-    loaded = json.loads(out.read_text("utf-8"))
+    meta, _ = process_csv(str(CSV))
+    out_path = write_report(
+        out_dir=tmp_path,
+        filename=CSV.name,
+        sha256=meta["sha256"],
+        meta={
+            "n_rows": meta["n_rows"],
+            "n_cols": meta["n_cols"],
+            "fileds_validated": meta.get("fields_validated", []),
+            "warnings": meta.get("warnings", [])
+        },
+        rulepacks=[],
+        provenance={"license": None, "source_url": None, "notes": None},
+        input_path=str(CSV),
+        )
+    
+    assert out_path.name == "report.json" and out_path.exists()
+    loaded = json.loads(out_path.read_text("utf-8"))
     assert loaded["summary"]["n_rows"] == meta["n_rows"]
