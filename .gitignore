@@ -30,3 +30,4 @@ project_dir/dist/
 # Test fixture raw data (avoid huge binaries)
 fairy/tests/fixtures/**/raw/
 *.egg-info/
+tests/**/raw/
