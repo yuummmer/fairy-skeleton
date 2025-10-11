@@ -1,0 +1,3 @@
+sample_id,collection_date,tissue,read_length
+A1,2024-01-01,blood,100
+,2024-01-02,skin,0
