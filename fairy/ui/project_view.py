@@ -19,6 +19,7 @@ from fairy.ui.tabs.export_validate import render_export_validate_tab
 from fairy.ui.tabs.data_inventory import render_data_inventory_tab
 from fairy.ui.shared.context import ProjectCtx
 from fairy.ui.tabs.overview import render_overview_tab
+from fairy.ui.tabs.permissions_ethics import render_permissions_tab
 
 def _get_selected_project(projects):
     pid = st.session_state.get("selected_project_id")
@@ -55,27 +56,10 @@ def render_project(projects, save_and_refresh) -> None:
 
     with tabs[1]:
         render_data_inventory_tab(ctx)
-
+    with tabs[2]:
+        render_permissions_tab(ctx)
     with tabs[6]:
         render_export_validate_tab(ctx)
-
-
-    # ---- Permissions & Ethics ----------------------------------------------
-    with tabs[2]:
-        st.subheader("Permissions & Ethics (placeholder)")
-        contains_human = st.radio("Does your dataset include human subjects data?",
-                                  options=["Unknown","No","Yes"], index=0, key=f"perm_contains_human_{p['id']}")
-        irb = st.radio("IRB/ethics approval required?",
-                       options=["Unknown","No","Yes"], index=0, key=f"perm_irb_{p['id']}")
-        perm_notes = st.text_area("Notes", key=f"perm_notes_{p['id']}")
-        if st.button("Save permissions"):
-            p["permissions"] = {
-                "contains_human_data": None if contains_human=="Unknown" else (contains_human=="Yes"),
-                "irb_required": None if irb=="Unknown" else (irb=="Yes"),
-                "notes": perm_notes.strip()
-            }
-            update_project_timestamp(p)
-            save_and_refresh(projects)
 
     # ---- De-identification --------------------------------------------------
     with tabs[3]:
