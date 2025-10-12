@@ -16,6 +16,7 @@ from fairy.validation.process_csv import process_csv
 from fairy.core.services.report_writer import write_report
 from fairy.ui.preview_utils import run_validators, build_tooltip_matrix, styled_preview
 from fairy.ui.tabs.export_validate import render_export_validate_tab
+from fairy.ui.tabs.data_inventory import render_data_inventory_tab
 from fairy.ui.shared.context import ProjectCtx
 from fairy.ui.tabs.overview import render_overview_tab
 
@@ -51,23 +52,13 @@ def render_project(projects, save_and_refresh) -> None:
 
     with tabs[0]:
         render_overview_tab(ctx)
+
+    with tabs[1]:
+        render_data_inventory_tab(ctx)
+
     with tabs[6]:
         render_export_validate_tab(ctx)
 
-
-    # ---- Data Inventory -----------------------------------------------------
-    with tabs[1]:
-        st.subheader("Data Inventory")
-        st.caption("Link to where your raw data lives (S3/GS/Box/Drive or local path). FAIRy records locations; it does not upload raw data.")
-        name = st.text_input("Item name", placeholder="e.g., FASTQ files (batch A)")
-        path = st.text_input("Path or URL", placeholder="e.g., s3://bucket/run1/*.fastq.gz")
-        notes = st.text_input("Notes (optional)")
-        if st.button("Add to inventory") and name.strip() and path.strip():
-            p["data_inventory"].append({"name": name.strip(), "path": path.strip(), "notes": notes.strip()})
-            update_project_timestamp(p)
-            save_and_refresh(projects)
-        if p["data_inventory"]:
-            st.table(pd.DataFrame(p["data_inventory"]))
 
     # ---- Permissions & Ethics ----------------------------------------------
     with tabs[2]:
