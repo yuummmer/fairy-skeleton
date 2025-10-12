@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "FAIRy (v0.1, prototype)"
+version: "0.1.0"
+date-released: "2025-10-12"
+repository-code: "https://github.com/yuummmer/metadata-wizard"
+authors:
+  - name: "FAIRy contributors"
+preferred-citation:
+  type: software
+  title: "FAIRy (v0.1, prototype)"
+  url: "https://github.com/yuummmer/metadata-wizard"
