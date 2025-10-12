@@ -21,7 +21,17 @@ if "selected_project_id" not in st.session_state:
     st.session_state.selected_project_id = None
 
 st.sidebar.title("Navigation")
-view = st.sidebar.radio("Go to", ["Home", "Project"], index=0)
+
+if st.session_state.get("__nav_go_home__"):
+    st.session_state["main_nav"] = "Home"
+    del st.session_state["__nav_go_home__"]
+
+view = st.sidebar.radio(
+    "Go to",
+    ["Home", "Project"],
+    index=0,
+    key="main_nav"
+)
 
 projects = store.load_projects()
 
