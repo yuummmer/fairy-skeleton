@@ -39,3 +39,7 @@ if view == "Home":
     render_home(projects, save_and_refresh)
 else:
     render_project(projects, save_and_refresh)
+
+st.sidebar.markdown("—")
+st.sidebar.caption("If you use FAIRy, please cite v0.1 (prototype). See **README → Attribution**.")
+
