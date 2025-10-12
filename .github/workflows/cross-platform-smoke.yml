@@ -40,7 +40,7 @@ jobs:
           from fairy.core.services.report_writer import write_report
 
           repo = Path(".").resolve()
-          csv  = repo/"tests"/"golden"/"bad.csv"
+          csv  = repo/"tests"/"test.csv"
           if not csv.exists():
               print(f"❌ Missing {csv}", file=sys.stderr); sys.exit(2)
 
