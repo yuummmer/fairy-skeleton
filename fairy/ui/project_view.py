@@ -21,6 +21,7 @@ from fairy.ui.shared.context import ProjectCtx
 from fairy.ui.tabs.overview import render_overview_tab
 from fairy.ui.tabs.permissions_ethics import render_permissions_tab
 from fairy.ui.tabs.deidentification import render_deidentification_tab
+from fairy.ui.tabs.repository import render_repository_tab
 
 
 def _get_selected_project(projects):
@@ -61,6 +62,8 @@ def render_project(projects, save_and_refresh) -> None:
         render_permissions_tab(ctx)
     with tabs[3]:
         render_deidentification_tab(ctx)
+    with tabs[5]:
+        render_repository_tab(ctx)
     with tabs[6]:
         render_export_validate_tab(ctx)
 
@@ -273,20 +276,6 @@ def render_project(projects, save_and_refresh) -> None:
         else:
             st.caption("No files saved to this project manifest yet.")
 
-    # ---- Repository ---------------------------------------------------------
-    with tabs[5]:
-        st.subheader("Repository (placeholder)")
-        repo = st.selectbox("Choose a repository",
-                            ["— select —","GEO","SRA","ENA","Zenodo","dbGaP"],
-                            index=0, key=f"repo_choice_{p['id']}")
-        repo_notes = st.text_area("Notes", value=p["repository"].get("notes",""),
-                                  key=f"repo_notes_{p['id']}")
-        if st.button("Save repository choice", key=f"repo_save_{p['id']}"):
-            p["repository"] = {"choice": None if repo=="— select —" else repo, "notes": repo_notes.strip()}
-            update_project_timestamp(p)
-            save_and_refresh(projects)
-
-    # ---- Export & Validate --------------------------------------------------
 
     if st.sidebar.button("← Back to Home"):
         st.session_state.selected_project_id = None
