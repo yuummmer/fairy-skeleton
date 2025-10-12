@@ -20,6 +20,8 @@ from fairy.ui.tabs.data_inventory import render_data_inventory_tab
 from fairy.ui.shared.context import ProjectCtx
 from fairy.ui.tabs.overview import render_overview_tab
 from fairy.ui.tabs.permissions_ethics import render_permissions_tab
+from fairy.ui.tabs.deidentification import render_deidentification_tab
+
 
 def _get_selected_project(projects):
     pid = st.session_state.get("selected_project_id")
@@ -53,23 +55,14 @@ def render_project(projects, save_and_refresh) -> None:
 
     with tabs[0]:
         render_overview_tab(ctx)
-
     with tabs[1]:
         render_data_inventory_tab(ctx)
     with tabs[2]:
         render_permissions_tab(ctx)
+    with tabs[3]:
+        render_deidentification_tab(ctx)
     with tabs[6]:
         render_export_validate_tab(ctx)
-
-    # ---- De-identification --------------------------------------------------
-    with tabs[3]:
-        st.subheader("De-identification (placeholder)")
-        strategy = st.text_area("Strategy / approach", value=p["deid"].get("strategy",""), key=f"deid_strategy_{p['id']}")
-        deid_notes = st.text_area("Notes", value=p["deid"].get("notes",""), key=f"deid_notes_{p['id']}")
-        if st.button("Save de-identification"):
-            p["deid"] = {"strategy": strategy.strip(), "notes": deid_notes.strip()}
-            update_project_timestamp(p)
-            save_and_refresh(projects)
 
     # ---- Metadata -------------------------------------------------
     with tabs[4]:
