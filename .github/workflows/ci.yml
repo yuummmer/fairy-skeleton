@@ -21,15 +21,15 @@ jobs:
           python-version: "3.12"
           cache: "pip"
 
-      - name: Install dependencies
+      - name: Install project (with dev extras if available)
         run: |
           python -m pip install -U pip
+          # If you keep a requirements.txt, install that first (optional)
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # Ensure test deps are present even if not in requirements.txt
-          pip install --upgrade --quiet pytest pandas pandera jsonschema
+          # Install your package so 'from fairy...' imports work
+          pip install -e .[dev] || pip install -e .
 
       - name: Run tests
         env:
-          PYTHONPATH: .
           DISABLE_PANDERA_IMPORT_WARNING: "True"
         run: pytest -q
