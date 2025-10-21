@@ -1,0 +1,4 @@
+sample_id,read_length,tissue,collection_date
+A001,0,brain,2024-01-01
+A001,150,,2024-02-01
+,75,liver,not-a-date
