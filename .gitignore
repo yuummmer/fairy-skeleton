@@ -31,3 +31,6 @@ project_dir/dist/
 fairy/tests/fixtures/**/raw/
 *.egg-info/
 tests/**/raw/
+# CLI output artifacts
+out.md
+project_dir/
