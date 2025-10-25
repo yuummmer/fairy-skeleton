@@ -1,4 +1,5 @@
 import json
+import copy
 from pathlib import Path
 from fairy.core.services.report_writer import write_report
 from fairy.validation.process_csv import process_csv
@@ -8,9 +9,19 @@ BAD = REPO / "tests" / "fairy" / "test_bad.csv"
 EXP = REPO / "tests" / "golden" / "expected" / "report_bad.json"
 
 def _normalize(d: dict) -> dict:
-    d = dict(d)
-    d.pop("run_at", None)
-    return d
+    data = copy.deepcopy(d)
+
+    # drop nondeterministic timestamp
+    data.pop("run_at", None)
+
+    # normalize machine-specific absolute paths
+    try:
+        if "inputs" in data and "project_dir" in data["inputs"]:
+            data["inputs"]["project_dir"] = "<<PROJECT_DIR>>"
+    except Exception:
+        pass
+    
+    return data
 
 def test_bad_csv_matches_expected(tmp_path):
     # Produce a report using the real writer flow
