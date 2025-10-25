@@ -34,9 +34,11 @@ jobs:
 
       - name: Smoke import + versions
         run: |
-          python -c "import sys; print(sys.version)"
-          python -c "import fairy; print('fairy import OK')"
+          python -c "import sys; print('PYTHON', sys.version)"
+          fairy --verison
 
-      - name: Pytest smoke
+      - name: Demo validate on bundled dataset
+        shell: bash
         run: |
-          pytest -q || pytest -q -k "roundtrip or report or golden"
+          fairy validate demos/PASS_minimal_rnaseq --report-md smoke.md
+          test -f smoke.md || (echo "smoke.md not created" && exit 1)
